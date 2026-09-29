@@ -1,0 +1,18 @@
+services:
+  api:
+    build: .
+    container_name: ai-quotation-api
+    environment:
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    ports:
+      - "127.0.0.1:${APP_PORT:-18000}:8000"
+    networks:
+      default: {}
+      dify:
+        aliases:
+          - ai-quotation-api
+
+networks:
+  dify:
+    external: true
+    name: ${DIFY_DOCKER_NETWORK:-docker_default}

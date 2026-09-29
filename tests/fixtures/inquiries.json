@@ -1,0 +1,76 @@
+[
+  {
+    "id": "complete_en",
+    "description": "正常完整询盘",
+    "inquiry": "Hi, I need to ship 850kg / 3.2 CBM general cargo by air from Shenzhen to Los Angeles on 2026-10-02. Could you send me your best rate? Regards, Alex Chen, alex@example.com",
+    "simulate": null,
+    "expected_branch": "quote"
+  },
+  {
+    "id": "missing_origin",
+    "description": "缺 origin",
+    "inquiry": "Please quote 500 kg of general cargo to Hamburg by sea, ready on 2026-10-05.",
+    "simulate": null,
+    "expected_branch": "clarification",
+    "expected_missing_fields": ["origin"]
+  },
+  {
+    "id": "missing_destination",
+    "description": "缺 destination",
+    "inquiry": "We have 2.5 CBM of general cargo from Shanghai, ready next Monday. Please quote sea freight.",
+    "simulate": null,
+    "expected_branch": "clarification",
+    "expected_missing_fields": ["destination"]
+  },
+  {
+    "id": "weight_only",
+    "description": "只有 weight",
+    "inquiry": "Air freight inquiry: 420 kg general cargo from Shenzhen to Los Angeles. Ready date 2026-10-03.",
+    "simulate": null,
+    "expected_branch": "quote"
+  },
+  {
+    "id": "volume_only",
+    "description": "只有 volume",
+    "inquiry": "Please quote 6.8 CBM general cargo from Shanghai to Hamburg by sea.",
+    "simulate": null,
+    "expected_branch": "quote"
+  },
+  {
+    "id": "ambiguous",
+    "description": "模糊自然语言询盘",
+    "inquiry": "We may have some boxes going to the US sometime soon. Can you give us a rough price?",
+    "simulate": null,
+    "expected_branch": "clarification",
+    "expected_missing_fields": ["origin", "destination", "weight_kg_or_volume_cbm"]
+  },
+  {
+    "id": "api_timeout",
+    "description": "API timeout",
+    "inquiry": "Quote 850 kg and 3.2 CBM general cargo from Shenzhen to Los Angeles by air.",
+    "simulate": "timeout",
+    "expected_branch": "fallback"
+  },
+  {
+    "id": "api_500",
+    "description": "API 500",
+    "inquiry": "Quote 850 kg and 3.2 CBM general cargo from Shenzhen to Los Angeles by air.",
+    "simulate": "error_500",
+    "expected_branch": "fallback"
+  },
+  {
+    "id": "complete_zh",
+    "description": "中文询盘",
+    "inquiry": "您好，请报深圳到洛杉矶的空运价格，普货，重量 850 公斤，体积 3.2 立方米，预计 2026-10-02 备好。联系人王明，邮箱 wangming@example.com。",
+    "simulate": null,
+    "expected_branch": "quote"
+  },
+  {
+    "id": "conflicting_fields",
+    "description": "字段冲突询盘",
+    "inquiry": "Please quote air freight from Shenzhen to Los Angeles. The packing list says 500 kg / 2 CBM, but the email summary says 800 kg / 5 CBM. Which figure should be used?",
+    "simulate": null,
+    "expected_branch": "clarification",
+    "expected_invalid_fields": ["weight_kg", "volume_cbm"]
+  }
+]
