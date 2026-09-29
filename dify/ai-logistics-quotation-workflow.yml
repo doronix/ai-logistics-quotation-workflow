@@ -1206,11 +1206,11 @@ workflow:
       width: 241
       zIndex: 0
     - data:
-        author: abc12345
+        author: Portfolio Demo
         desc: ''
         height: 88
         selected: false
-        showAuthor: true
+        showAuthor: false
         text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"一小时后timeout","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
         theme: blue
         title: ''

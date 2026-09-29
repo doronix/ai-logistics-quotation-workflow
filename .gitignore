@@ -6,3 +6,6 @@ __pycache__/
 *.egg-info/
 build/
 dist/
+
+# Local captures pending privacy review; publish approved images under docs/assets/.
+/assets/

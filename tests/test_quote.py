@@ -12,7 +12,7 @@ COMPLETE = {
     "destination": "Los Angeles",
     "weight_kg": 850,
     "volume_cbm": 3.2,
-    "cargo_type": "general",
+    "cargo_type": "general cargo",
     "transport_mode": "air",
 }
 
@@ -41,6 +41,17 @@ def test_quote_schema_and_deterministic_price() -> None:
         "estimated_transit_days",
         "provider",
     }
+
+
+def test_known_route_accepts_chinese_names_and_airport_codes() -> None:
+    for origin, destination in (("深圳", "洛杉矶"), ("SZX", "LAX")):
+        response = client.post(
+            "/api/v1/rates/quote",
+            json={**COMPLETE, "origin": origin, "destination": destination},
+        )
+        assert response.status_code == 200
+        assert response.json()["total_price"] == 2137.4
+        assert response.json()["estimated_transit_days"] == 5
 
 
 def test_minimum_charge_and_default_air() -> None:

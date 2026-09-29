@@ -80,7 +80,7 @@ Dify correctly blocks private destinations by default. Keep that protection enab
 3. Set SSRF_PROXY_ALLOW_PRIVATE_IPS in Dify's docker/.env to exactly that returned CIDR.
 4. Recreate only the ssrf_proxy service using Dify's normal Compose project.
 
-On this workstation the read-only inspection returned 172.22.0.0/16 on 2026-09-29. Treat that as observed state, not a portable value: Docker may allocate a different subnet after recreation or on another host. Re-inspect before troubleshooting. Do not allowlist all RFC1918 ranges and do not disable SSRF checks globally.
+Docker may allocate a different subnet after recreation or on another host, so re-inspect before troubleshooting. Do not copy an old CIDR, allowlist all RFC1918 ranges, or disable SSRF checks globally.
 
 These steps change Docker runtime state. Review them before execution; this project does not apply them automatically and does not modify NixOS, systemd, or firewall configuration.
 
@@ -98,7 +98,7 @@ Normal quote:
 curl -i -X POST http://127.0.0.1:18000/api/v1/rates/quote \
   -H 'Content-Type: application/json' \
   -H 'X-Request-ID: demo-normal-001' \
-  -d '{"origin":"Shenzhen","destination":"Los Angeles","weight_kg":850,"volume_cbm":3.2,"cargo_type":"general","transport_mode":"air"}'
+  -d '{"origin":"Shenzhen","destination":"Los Angeles","weight_kg":850,"volume_cbm":3.2,"cargo_type":"general cargo","transport_mode":"air"}'
 ~~~
 
 Invalid request:

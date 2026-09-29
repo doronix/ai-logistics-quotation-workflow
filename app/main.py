@@ -93,11 +93,24 @@ DEFAULT_ROUTE = {
     "sea_days": 24,
 }
 
+LOCATION_ALIASES = {
+    "深圳": "shenzhen",
+    "szx": "shenzhen",
+    "洛杉矶": "los angeles",
+    "lax": "los angeles",
+}
+
+
+def normalize_location(value: str) -> str:
+    normalized = value.strip().casefold()
+    return LOCATION_ALIASES.get(normalized, normalized)
+
 
 def calculate_quote(payload: QuoteRequest) -> QuoteResponse:
     mode = payload.transport_mode or "air"
     route = ROUTES.get(
-        (payload.origin.lower(), payload.destination.lower()), DEFAULT_ROUTE
+        (normalize_location(payload.origin), normalize_location(payload.destination)),
+        DEFAULT_ROUTE,
     )
 
     if mode == "air":
